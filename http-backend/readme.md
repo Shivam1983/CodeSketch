@@ -1,6 +1,6 @@
-# Dev-Sketch HTTP Backend 🖥️
+# CodeSketch HTTP Backend 🖥️
 
-This is the **HTTP backend** for **Dev-Sketch**, a collaborative platform for **drawing, coding, and chatting** in real-time. The backend handles **authentication, database management, and API requests** for the frontend.
+This is the **HTTP backend** for **CodeSketch**, a collaborative platform for **drawing, coding, and chatting** in real-time. The backend handles **authentication, database management, and API requests** for the frontend.
 
 ## 🚀 Features
 - 🔑 **User Authentication** - Sign up, login, and session management.
@@ -35,8 +35,8 @@ Stores environment variables like database URL, JWT secret, and API keys. *(Igno
 
 ### 1️⃣ Clone the Repository  
 ```sh
-git clone https://github.com/RISHIK92/Dev-Sketch.git
-cd Dev-Sketch/http-backend
+git clone https://github.com/Shivam1983/CodeSketch/tree/main/http-backend
+cd CodeSketch/http-backend
 ```
 
 ### 2️⃣ Install Dependencies
