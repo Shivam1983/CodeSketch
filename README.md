@@ -49,7 +49,7 @@ This is the **WebSocket backend** for real-time features.
 
 ### 1️⃣ Clone the Repository
 ```sh
-git clone [https://github.com/RISHIK92/Dev-Sketch.git](https://github.com/Shivam1983/CodeSketch)
+git clone [https://github.com/Shivam1983/CodeSketch.git](https://github.com/Shivam1983/CodeSketch)
 cd CodeSketch
 ```
 🔎 Visit each folder's README for a more detailed view of what each folder does:
