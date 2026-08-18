@@ -33,8 +33,6 @@ export function VoiceChat({
   const audioAnalyserRef = useRef<AnalyserNode | null>(null);
   const animationFrameRef = useRef<number>(null);
 
-
-  // function which is responsible to startCall
   const startCall = async () => {
     if (!peerConnectionRef.current) {
       await initializeVoiceChat();
@@ -61,7 +59,6 @@ export function VoiceChat({
     }
   };
 
-  // function which is responsible to initializeVoiceChat
   const initializeVoiceChat = async () => {
     try {
       const configuration = { 
@@ -131,8 +128,6 @@ export function VoiceChat({
     }
   };
 
-
-  // function which is responsible for startAudioLevelMonitoring 
   const startAudioLevelMonitoring = () => {
     if (!audioAnalyserRef.current) return;
 
@@ -157,8 +152,6 @@ export function VoiceChat({
     updateAudioLevel();
   };
 
-  //function which is responsible for toggling Mute
-
   const toggleMute = () => {
     if (localStreamRef.current) {
       const audioTracks = localStreamRef.current.getAudioTracks();
@@ -169,8 +162,6 @@ export function VoiceChat({
     }
   };
 
-
-  // function which is responsible for toggling Deafen
   const toggleDeafen = () => {
     if (audioElementRef.current) {
       audioElementRef.current.muted = !audioElementRef.current.muted;
@@ -239,7 +230,6 @@ export function VoiceChat({
   return (
     <div className="fixed bottom-4 right-4 z-30 bg-gray-800 rounded-xl shadow-lg p-3 space-y-3">
       <div className="flex space-x-2">
-        {/* On clicking this icon user will be able to toggle the mute functoinality */}
         <IconButton
           onClick={toggleMute}
           activated={!voiceState.isMuted}
@@ -247,8 +237,6 @@ export function VoiceChat({
           label={voiceState.isMuted ? "Unmute" : "Mute"}
           className="bg-gray-700 hover:bg-gray-600"
         />
-
-        {/* On clicking this icon user will be able to toggle the deafen */}
         <IconButton
           onClick={toggleDeafen}
           activated={!voiceState.isDeafened}
@@ -256,8 +244,6 @@ export function VoiceChat({
           label={voiceState.isDeafened ? "Undeafen" : "Deafen"}
           className="bg-gray-700 hover:bg-gray-600"
         />
-
-        {/* on clicking this button video call will be started */}
         <button
           onClick={startCall}
           className="px-3 py-1 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"

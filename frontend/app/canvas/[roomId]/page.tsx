@@ -1,10 +1,11 @@
-"use client"; 
-import { RoomCanvas } from "@/components/RoomCanvas"; // Importing the RoomCanvas component
-import React from "react"; // Importing React
+"use client";
+import { RoomCanvas } from "@/components/RoomCanvas";
+import React from "react";
 
-// This component represents a dynamic canvas page for a specific room
 export default function CanvasPage({ params }: { params: Promise<{ roomId: string}> }) {
-    const { roomId } = React.use(params); 
-    if (!roomId) return <p>Loading...</p>; 
-    return <RoomCanvas roomId={roomId} />; 
+    const { roomId } = React.use(params);
+
+    if (!roomId) return <p>Loading...</p>;
+
+    return <RoomCanvas roomId={roomId} />;
 }

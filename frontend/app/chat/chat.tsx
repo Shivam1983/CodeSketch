@@ -2,15 +2,6 @@ import { X, Send } from "lucide-react";
 import { useEffect } from "react";
 import { useState } from "react";
 
-/// ChatInterface component
-/// This component is responsible for displaying the chat interface
-/// It takes in the following props:
-/// - isChatOpen: boolean - whether the chat is open or not
-/// - setIsChatOpen: function - function to set the chat open state
-/// - socket: WebSocket - the WebSocket connection
-/// - roomId: string - the room ID for the chat
-/// - username: string - the username of the user
-
 interface ChatInterfaceProps {
   isChatOpen: boolean;
   setIsChatOpen: (isOpen: boolean) => void;
@@ -36,13 +27,6 @@ export default function ChatInterface({ setIsChatOpen, socket, roomId, username 
     };
   }, [socket]);
 
-  /// Handle sending messages
-  /// This function is called when the user sends a message
-  /// It sends the message to the server via the WebSocket connection
-  /// It also clears the input field after sending the message
-  /// @param {string} message - The message to be sent
-  /// @returns {void}
-
   const handleSendMessage = () => {
     socket.send(JSON.stringify({
         type: "messages",
@@ -52,9 +36,6 @@ export default function ChatInterface({ setIsChatOpen, socket, roomId, username 
     }))
     setInput("")
   };
-
-  /// Handle closing the chat
-  /// This function is called when the user closes the chat
   return (
     <div className="h-screen fixed top-0 right-0 w-1/4 flex flex-col bg-white/90 backdrop-blur-sm z-30 border border-gray-100">
       {/* Header */}
