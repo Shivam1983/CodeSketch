@@ -31,28 +31,29 @@ function App() {
     }
   
     try {
+      const trimmedName = roomName.trim();
       const response = await axios.post(
         `${HTTP_Backend}/room`,
-        { name: roomName },
+        { name: trimmedName },
         {headers: {
           "Content-Type": "application/json",
           "Authorization": token
       }},
       );
             
-      const roomId = response.data.roomId;
-      if (response.status === 200) {
+      const roomId = response.data?.roomId;
+      if (response.status === 200 && roomId) {
         setStatus('success');
-        setMessage(`Room ${roomName} has been successfully created!`);
+        setMessage(`Room ${trimmedName} has been successfully created!`);
         router.push(`/canvas/${roomId}`);
       } else {
         setStatus('error');
         setMessage('Room name already taken, please try another name.');
       }
-    } catch (err) {
+    } catch (err: any) {
       console.log(err);
       setStatus('error');
-      setMessage('Internal Server Error, Try Again!');
+      setMessage(err.response?.data?.msg || 'Internal Server Error, Try Again!');
     }
   };
   
@@ -73,24 +74,25 @@ function App() {
     }
   
     try {
+      const trimmedName = roomName.trim();
       const response = await axios.get(
-        `${HTTP_Backend}/room/${roomName}`
+        `${HTTP_Backend}/room/${encodeURIComponent(trimmedName)}`
       );
 
-      const roomId = response.data.room.id;
+      const roomId = response.data?.room?.id;
   
-      if (response.status === 200) {
+      if (roomId) {
         setStatus('success');
-        setMessage(`You've successfully joined ${roomName}!`);
+        setMessage(`You've successfully joined ${trimmedName}!`);
         router.push(`/canvas/${roomId}`); 
       } else {
         setStatus('error');
         setMessage('Room not found, please check the name or ID.');
       }
-    } catch (err) {
+    } catch (err: any) {
       console.log(err);
       setStatus('error');
-      setMessage('Room not found');
+      setMessage(err.response?.data?.msg || 'Room not found, please check the name or ID.');
     }
   };
   
