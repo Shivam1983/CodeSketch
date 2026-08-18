@@ -5,7 +5,7 @@ import axios from "axios";
 import { HTTP_Backend } from "@/config";
 import { MonacoEditor } from "@/app/editor-comp/editor";
 import { VoiceChat } from "./VoiceChat";
-import { Topbar } from "./TopBar";
+import { Topbar } from "./Topbar";
 import ChatInterface from "@/app/chat/chat";
 
 export type Tool = "circle" | "rect" | "pencil" | "eraser" | "move";
