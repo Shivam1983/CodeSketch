@@ -1,75 +1,146 @@
 import { Game } from "@/draw/Game";
-import { Pencil, RectangleHorizontal, Circle, Eraser, Move, ChevronDown, Trash2 } from "lucide-react";
+import {
+  Pencil,
+  Minus,
+  ArrowRight,
+  RectangleHorizontal,
+  Diamond,
+  Circle,
+  Type,
+  Eraser,
+  Move,
+  ChevronDown,
+  Trash2,
+} from "lucide-react";
 import { useState } from "react";
 import { clearCanvas, Tool } from "./Canvas";
 
 export const Topbar = ({
-    selectedTool,
-    setSelectedTool,
-    game,
-    roomId
-  }: {
-    selectedTool: Tool;
-    setSelectedTool: (s: Tool) => void;
-    game: Game | undefined;
-    roomId: string;
-  }) => {
-    const colors = ["black", "red", "green", "blue", "yellow", "purple"];
-    const lineWidths = [2, 5, 10, 15];
-  
-    const [selectedColor, setSelectedColor] = useState<string>("black");
-    const [selectedLineWidth, setSelectedLineWidth] = useState<number>(5);
-    const [showClearAlert, setShowClearAlert] = useState(false);
-    const [showColorPicker, setShowColorPicker] = useState(false);
-    const [showWidthPicker, setShowWidthPicker] = useState(false);
-  
-    return (
-      <div className="fixed top-4 left-1/2 -translate-x-1/2 flex items-center">
-        {/* Main Toolbar */}
-        <div className="bg-white/90 backdrop-blur-sm rounded-full shadow-lg px-3 py-2 flex items-center gap-2">
-          {/* Tools Group */}
-          <div className="flex items-center gap-1 pr-3 border-r border-gray-200">
-            <button
-              onClick={() => setSelectedTool("pencil")}
-              className={`p-2 rounded-lg transition-all ${
-                selectedTool === "pencil" ? "bg-blue-100 text-blue-600" : "hover:bg-gray-100 text-gray-700"
-              }`}
-            >
-              <Pencil className="w-5 h-5" />
-            </button>
-            <button
-              onClick={() => setSelectedTool("rect")}
-              className={`p-2 rounded-lg transition-all ${
-                selectedTool === "rect" ? "bg-blue-100 text-blue-600" : "hover:bg-gray-100 text-gray-700"
-              }`}
-            >
-              <RectangleHorizontal className="w-5 h-5" />
-            </button>
-            <button
-              onClick={() => setSelectedTool("circle")}
-              className={`p-2 rounded-lg transition-all ${
-                selectedTool === "circle" ? "bg-blue-100 text-blue-600" : "hover:bg-gray-100 text-gray-700"
-              }`}
-            >
-              <Circle className="w-5 h-5" />
-            </button>
-            <button
-              onClick={() => setSelectedTool("eraser")}
-              className={`p-2 rounded-lg transition-all ${
-                selectedTool === "eraser" ? "bg-blue-100 text-blue-600" : "hover:bg-gray-100 text-gray-700"
-              }`}
-            >
-              <Eraser className="w-5 h-5" />
-            </button>
-            <button
-              onClick={() => setSelectedTool("move")}
-              className={`p-2 rounded-lg transition-all ${
-                selectedTool === "move" ? "bg-blue-100 text-blue-600" : "hover:bg-gray-100 text-gray-700"
-              }`}
-            >
-              <Move className="w-5 h-5" />
-            </button>
-          </div>
+  selectedTool,
+  setSelectedTool,
+  game,
+  roomId,
+}: {
+  selectedTool: Tool;
+  setSelectedTool: (s: Tool) => void;
+  game: Game | undefined;
+  roomId: string;
+}) => {
+  const colors = ["black", "red", "green", "blue", "yellow", "purple"];
+  const lineWidths = [2, 5, 10, 15];
+
+  const [selectedColor, setSelectedColor] = useState<string>("black");
+  const [selectedLineWidth, setSelectedLineWidth] = useState<number>(5);
+  const [showClearAlert, setShowClearAlert] = useState(false);
+  const [showColorPicker, setShowColorPicker] = useState(false);
+  const [showWidthPicker, setShowWidthPicker] = useState(false);
+
+  return (
+    <div className="fixed top-4 left-1/2 -translate-x-1/2 flex items-center z-30">
+      {/* Main Toolbar */}
+      <div className="bg-white/95 backdrop-blur-md rounded-2xl shadow-xl border border-gray-200/80 px-2.5 py-1.5 flex items-center gap-1.5">
+        {/* Tools Group */}
+        <div className="flex items-center gap-1 pr-2 border-r border-gray-200">
+          <button
+            onClick={() => setSelectedTool("pencil")}
+            className={`p-2 rounded-xl transition-all ${
+              selectedTool === "pencil"
+                ? "bg-blue-100 text-blue-600 shadow-sm"
+                : "hover:bg-gray-100 text-gray-700"
+            }`}
+            title="Freehand Pencil (P)"
+          >
+            <Pencil className="w-4 h-4" />
+          </button>
+          <button
+            onClick={() => setSelectedTool("line")}
+            className={`p-2 rounded-xl transition-all ${
+              selectedTool === "line"
+                ? "bg-blue-100 text-blue-600 shadow-sm"
+                : "hover:bg-gray-100 text-gray-700"
+            }`}
+            title="Straight Line (L)"
+          >
+            <Minus className="w-4 h-4" />
+          </button>
+          <button
+            onClick={() => setSelectedTool("arrow")}
+            className={`p-2 rounded-xl transition-all ${
+              selectedTool === "arrow"
+                ? "bg-blue-100 text-blue-600 shadow-sm"
+                : "hover:bg-gray-100 text-gray-700"
+            }`}
+            title="Arrow (A)"
+          >
+            <ArrowRight className="w-4 h-4" />
+          </button>
+          <button
+            onClick={() => setSelectedTool("rect")}
+            className={`p-2 rounded-xl transition-all ${
+              selectedTool === "rect"
+                ? "bg-blue-100 text-blue-600 shadow-sm"
+                : "hover:bg-gray-100 text-gray-700"
+            }`}
+            title="Rectangle (R)"
+          >
+            <RectangleHorizontal className="w-4 h-4" />
+          </button>
+          <button
+            onClick={() => setSelectedTool("diamond")}
+            className={`p-2 rounded-xl transition-all ${
+              selectedTool === "diamond"
+                ? "bg-blue-100 text-blue-600 shadow-sm"
+                : "hover:bg-gray-100 text-gray-700"
+            }`}
+            title="Diamond / Rhombus (D)"
+          >
+            <Diamond className="w-4 h-4" />
+          </button>
+          <button
+            onClick={() => setSelectedTool("circle")}
+            className={`p-2 rounded-xl transition-all ${
+              selectedTool === "circle"
+                ? "bg-blue-100 text-blue-600 shadow-sm"
+                : "hover:bg-gray-100 text-gray-700"
+            }`}
+            title="Circle / Ellipse (C)"
+          >
+            <Circle className="w-4 h-4" />
+          </button>
+          <button
+            onClick={() => setSelectedTool("text")}
+            className={`p-2 rounded-xl transition-all ${
+              selectedTool === "text"
+                ? "bg-blue-100 text-blue-600 shadow-sm"
+                : "hover:bg-gray-100 text-gray-700"
+            }`}
+            title="Text Tool (T)"
+          >
+            <Type className="w-4 h-4" />
+          </button>
+          <button
+            onClick={() => setSelectedTool("eraser")}
+            className={`p-2 rounded-xl transition-all ${
+              selectedTool === "eraser"
+                ? "bg-rose-100 text-rose-600 shadow-sm"
+                : "hover:bg-gray-100 text-gray-700"
+            }`}
+            title="Eraser (E)"
+          >
+            <Eraser className="w-4 h-4" />
+          </button>
+          <button
+            onClick={() => setSelectedTool("move")}
+            className={`p-2 rounded-xl transition-all ${
+              selectedTool === "move"
+                ? "bg-blue-100 text-blue-600 shadow-sm"
+                : "hover:bg-gray-100 text-gray-700"
+            }`}
+            title="Move / Select (V)"
+          >
+            <Move className="w-4 h-4" />
+          </button>
+        </div>
   
           {/* Color Picker */}
           <div className="relative px-3 border-r border-gray-200">

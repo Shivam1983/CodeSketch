@@ -8,7 +8,16 @@ import { VoiceChat } from "./VoiceChat";
 import { Topbar } from "./Topbar";
 import ChatInterface from "@/app/chat/chat";
 
-export type Tool = "circle" | "rect" | "pencil" | "eraser" | "move";
+export type Tool =
+  | "pencil"
+  | "line"
+  | "arrow"
+  | "rect"
+  | "diamond"
+  | "circle"
+  | "text"
+  | "eraser"
+  | "move";
 
 export function Canvas({
   roomId,
@@ -25,6 +34,7 @@ export function Canvas({
   const [language, setLanguage] = useState<"javascript" | "python" | "cpp">("javascript");
   const [showEditor, setShowEditor] = useState(false);
   const [isChatOpen, setIsChatOpen] = useState(false);
+  const [unreadCount, setUnreadCount] = useState(0);
 
   useEffect(() => {
     game?.setTool(selectedTool);
@@ -71,38 +81,42 @@ export function Canvas({
         </button>
       )}
 
-      {/* Chat Interface */}
-      {isChatOpen && (
-        <div className={`h-4/5 fixed w-1/4 right-0 top-0 transform transition-transform duration-300 z-20 overflow-hidden`}>
-          <ChatInterface isChatOpen={isChatOpen} setIsChatOpen={setIsChatOpen} socket={socket} roomId={roomId} username={username}/>
-        </div>
-      )}
-
-      {/* Chat Toggle Button */}
-      {isChatOpen && (
-      <ChatInterface 
-        isChatOpen={isChatOpen} 
-        setIsChatOpen={setIsChatOpen} 
-        socket={socket} 
-        roomId={roomId} 
+      {/* Chat Interface (Always mounted to persist conversation history & receive incoming messages) */}
+      <ChatInterface
+        isChatOpen={isChatOpen}
+        setIsChatOpen={(open) => {
+          setIsChatOpen(open);
+          if (open) setUnreadCount(0);
+        }}
+        socket={socket}
+        roomId={roomId}
         username={username}
+        onNewMessageWhileClosed={() => setUnreadCount((prev) => prev + 1)}
       />
-    )}
 
-    {/* Chat Toggle Button */}
-    {!isChatOpen && (
-      <button
-        onClick={() => setIsChatOpen(true)}
-        className="fixed right-4 top-4 z-30 bg-black rounded-xl shadow-lg p-3 hover:bg-gray-700 transition-colors"
-      >
-        <MessageCircle className="w-5 h-5 text-white" />
-      </button>
-    )}
+      {/* Chat Toggle Button with Unread Badge */}
+      {!isChatOpen && (
+        <button
+          onClick={() => {
+            setIsChatOpen(true);
+            setUnreadCount(0);
+          }}
+          className="fixed right-4 top-4 z-30 bg-black rounded-xl shadow-lg p-3 hover:bg-gray-800 transition-all active:scale-95 group"
+          title="Open DevTalk Chat"
+        >
+          <div className="relative">
+            <MessageCircle className="w-5 h-5 text-white" />
+            {unreadCount > 0 && (
+              <span className="absolute -top-2.5 -right-2.5 bg-rose-500 text-white text-[10px] font-bold min-w-[18px] h-[18px] px-1 rounded-full flex items-center justify-center shadow-lg border-2 border-black animate-pulse">
+                {unreadCount > 99 ? "99+" : unreadCount}
+              </span>
+            )}
+          </div>
+        </button>
+      )}
 
       {/* Voice Chat */}
-      {!isChatOpen && (
-        <VoiceChat roomId={roomId} socket={socket} />
-      )}
+      <VoiceChat roomId={roomId} socket={socket} isChatOpen={isChatOpen} />
 
       {/* Canvas and Topbar */}
       <div className={`h-full w-full transition-all duration-300 ${showEditor ? "pl-1/4" : ""} ${isChatOpen ? "pr-1/4" : ""}`}>

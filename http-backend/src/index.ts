@@ -172,36 +172,62 @@ app.post(
 app.get("/chats/:roomId", async (req, res) => {
   const roomId = Number(req.params.roomId);
 
+  if (isNaN(roomId)) {
+    res.status(400).json({ msg: "Invalid Room ID", messages: [] });
+    return;
+  }
+
   try {
     const messages = await prismaClient.chat.findMany({
       where: {
         roomId: roomId,
       },
       orderBy: {
-        id: "desc",
+        id: "asc",
       },
-      take: 50,
+      take: 100,
     });
 
     res.json({
       messages,
     });
   } catch (e) {
-    res.status(411).json({ msg: "Room doesn't exist" });
+    res.status(404).json({ msg: "Room doesn't exist", messages: [] });
   }
 });
 
 app.get("/room/:slug", async (req, res) => {
   const slug = req.params.slug;
-  const room = await prismaClient.room.findFirst({
-    where: {
-      slug,
-    },
-  });
 
-  res.json({
-    room,
-  });
+  if (!slug || slug === "undefined") {
+    res.status(400).json({ msg: "Invalid room identifier", room: null });
+    return;
+  }
+
+  const isNumeric = !isNaN(Number(slug));
+
+  try {
+    const room = await prismaClient.room.findFirst({
+      where: isNumeric
+        ? {
+            OR: [{ slug: slug }, { id: Number(slug) }],
+          }
+        : {
+            slug: slug,
+          },
+    });
+
+    if (!room) {
+      res.status(404).json({ msg: "Room not found", room: null });
+      return;
+    }
+
+    res.json({
+      room,
+    });
+  } catch (err) {
+    res.status(500).json({ msg: "Server error", room: null });
+  }
 });
 
 app.post("/clear", async (req, res) => {

@@ -22,8 +22,15 @@ interface Room {
   users: Set<string>;
 }
 
+interface ChatHistoryItem {
+  username: string;
+  msg: string;
+  timestamp: number;
+}
+
 const users: User[] = [];
 const rooms = new Map<string, Room>();
+const roomChatHistory = new Map<string, ChatHistoryItem[]>();
 
 function checkUser(token: string): string | null {
   try {
@@ -92,6 +99,16 @@ wss.on("connection", function connection(ws, request) {
         room.users.add(userId);
 
         console.log(`Client ${userId} joined room ${roomId}. Total clients: ${room.clients.size}`);
+
+        // Send existing conversation history for this room to the joining client
+        if (roomChatHistory.has(roomId)) {
+          const history = roomChatHistory.get(roomId)!;
+          ws.send(JSON.stringify({
+            type: "chat_history",
+            roomId,
+            messages: history
+          }));
+        }
         break;
       }
 
@@ -113,7 +130,9 @@ wss.on("connection", function connection(ws, request) {
 
       case "offer":
       case "answer":
-      case "ice-candidate": {
+      case "ice-candidate":
+      case "hang_up":
+      case "reject_call": {
         const room = rooms.get(roomId);
         if (room) {
           room.clients.forEach((client) => {
@@ -137,24 +156,45 @@ wss.on("connection", function connection(ws, request) {
       }
 
       case "messages": {
-        users.forEach(user => {
-            try {
-                if (user.rooms.includes(roomId)) {
-                    const messagePayload = {
-                        type: "messages",
-                        status: user.ws === ws ? "sent" : "received",
-                        username: user.ws === ws ? "me" : parsedData.username,
-                        msg: parsedData.msg,
-                        roomId
-                    };
-                    user.ws.send(JSON.stringify(messagePayload));
-                }
-            } catch (error) {
-                console.error("Error sending message to user:", user, error);
+        if (!parsedData.msg || !parsedData.msg.trim()) break;
+        const msgText = parsedData.msg.trim();
+        const senderName = parsedData.username || "Anonymous";
+        const timestamp = Date.now();
+
+        // Save to in-memory room conversation history (keep latest 300 messages)
+        if (!roomChatHistory.has(roomId)) {
+          roomChatHistory.set(roomId, []);
+        }
+        const history = roomChatHistory.get(roomId)!;
+        history.push({
+          username: senderName,
+          msg: msgText,
+          timestamp
+        });
+        if (history.length > 300) {
+          history.shift();
+        }
+
+        users.forEach((user) => {
+          try {
+            if (user.rooms.includes(roomId) && user.ws.readyState === WebSocket.OPEN) {
+              const messagePayload = {
+                type: "messages",
+                status: user.ws === ws ? "sent" : "received",
+                username: user.ws === ws ? "me" : senderName,
+                rawSender: senderName,
+                msg: msgText,
+                roomId,
+                timestamp
+              };
+              user.ws.send(JSON.stringify(messagePayload));
             }
+          } catch (error) {
+            console.error("Error sending message to user:", user, error);
+          }
         });
         break;
-    }
+      }
 
       case "chat": {
         const { message } = parsedData;

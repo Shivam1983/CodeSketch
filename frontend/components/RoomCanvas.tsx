@@ -1,21 +1,20 @@
 "use client";
 
 import { WS_URL } from "@/config";
-import { useRef, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Canvas } from "./Canvas";
 import ErrorPage from "./Error";
 
 export function RoomCanvas({ roomId }: { roomId: string }) {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
   const [socket, setSocket] = useState<WebSocket | null>(null);
   const [token, setToken] = useState<string | null>(null);
-  const [username, setUsername] =  useState<string | null>(null);
+  const [username, setUsername] = useState<string | null>(null);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
       const storedToken = localStorage.getItem("token");
-      const username = localStorage.getItem("username");
-      setUsername(username);
+      const storedUsername = localStorage.getItem("username");
+      setUsername(storedUsername);
       setToken(storedToken);
     }
   }, []);
@@ -28,9 +27,8 @@ export function RoomCanvas({ roomId }: { roomId: string }) {
         setSocket(ws);
         const data = JSON.stringify({
           type: "join_room",
-          roomId
+          roomId,
         });
-        console.log(data);
         ws.send(data);
       };
 
@@ -45,13 +43,16 @@ export function RoomCanvas({ roomId }: { roomId: string }) {
   }
 
   if (!socket) {
-    return <div className="text-black">Connecting to server...</div>;
+    return (
+      <div className="h-screen w-screen flex items-center justify-center bg-gray-950 text-gray-300 font-medium">
+        Connecting to collaborative server...
+      </div>
+    );
   }
 
   return (
     <div className="overflow-hidden h-full w-full fixed">
       <Canvas roomId={roomId} socket={socket} username={username || "Guest"} />
-      <canvas ref={canvasRef} width={window.innerWidth} height={window.innerHeight}></canvas>
     </div>
   );
-}
+}

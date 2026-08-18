@@ -2,20 +2,31 @@ import { HTTP_Backend } from "@/config";
 import axios from "axios";
 
 export async function getExistingShapes(roomId: string) {
+  if (!roomId || roomId === "undefined" || isNaN(Number(roomId))) {
+    return [];
+  }
+  try {
     const res = await axios.get(`${HTTP_Backend}/chats/${roomId}`);
-    const messages = res.data.messages;
+    const messages = res.data.messages || [];
 
-    const shapes = messages
-    .map((x: { message: string }) => {
-        try {
-            const messageData = JSON.parse(x.message);
-            return messageData.shape || null;
-        } catch (error) {
-            console.error("Invalid JSON message:", x.message);
-            return null;
+    let currentShapes: any[] = [];
+
+    messages.forEach((x: { message: string }) => {
+      try {
+        const messageData = JSON.parse(x.message);
+        if (messageData.type === "update" && Array.isArray(messageData.shapes)) {
+          currentShapes = messageData.shapes;
+        } else if (messageData.shape) {
+          currentShapes.push(messageData.shape);
         }
-    })
-    .filter(Boolean); // Remove any null/undefined shapes
+      } catch (error) {
+        console.error("Invalid JSON message in shape history:", x.message);
+      }
+    });
 
-    return shapes;
-}
+    return currentShapes;
+  } catch (err) {
+    console.error("Error fetching existing shapes:", err);
+    return [];
+  }
+}
