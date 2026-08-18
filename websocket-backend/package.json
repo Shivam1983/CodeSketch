@@ -7,25 +7,26 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc",
     "start": "node dist/index.js",
-    "dev": "nodemon --exec ts-node src/index.ts"
+    "dev": "nodemon --exec ts-node src/index.ts",
+    "postinstall": "prisma generate"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "type": "commonjs",
-  "devDependencies": {
-    "@types/jsonwebtoken": "^9.0.8",
-    "@types/ws": "^8.5.14",
-    "nodemon": "^3.1.9",
-    "prisma": "^6.3.1",
-    "ts-node": "^10.9.2",
-    "typescript": "^5.7.3"
-  },
   "dependencies": {
     "@prisma/client": "^6.3.1",
+    "@types/jsonwebtoken": "^9.0.8",
+    "@types/node": "^22.13.4",
+    "@types/ws": "^8.5.14",
     "dotenv": "^16.4.7",
     "jsonwebtoken": "^9.0.2",
-    "node": "^22.14.0",
+    "prisma": "^6.3.1",
+    "typescript": "^5.7.3",
     "ws": "^8.18.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.9",
+    "ts-node": "^10.9.2"
   }
 }
