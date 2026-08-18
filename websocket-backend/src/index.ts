@@ -50,7 +50,9 @@ function checkUser(token: string): string | null {
   }
 }
 
-const wss = new WebSocketServer({ port: 8080 });
+const PORT = Number(process.env.PORT) || 8080;
+const wss = new WebSocketServer({ port: PORT });
+console.log(`WebSocket server running on port ${PORT}`);
 
 wss.on("connection", function connection(ws, request) {
   const url = request.url;

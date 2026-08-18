@@ -56,7 +56,7 @@ const PISTON_API_URL =
   process.env.PISTON_API_URL || "https://emkc.org/api/v2/piston/execute";
 const PISTON_API_TOKEN = process.env.PISTON_API_TOKEN;
 
-app.post("/signup", async (req, res) => {
+app.post("/signup", async (req: Request, res: Response): Promise<void> => {
   const parsedData = CreateUserSchema.safeParse(req.body);
 
   if (!parsedData.success) {
@@ -78,7 +78,7 @@ app.post("/signup", async (req, res) => {
         password: hashPassword,
       },
     });
-    res.status(201).send("Sign up Success"); // Send success status
+    res.status(201).send("Sign up Success");
   } catch (e) {
     console.log("Error during signup:", e);
     if ((e as { code?: string }).code === "P2002") {
@@ -93,7 +93,7 @@ app.post("/signup", async (req, res) => {
   }
 });
 
-app.post("/signin", async (req, res) => {
+app.post("/signin", async (req: Request, res: Response): Promise<void> => {
   const parsedData = SigninSchema.safeParse(req.body);
   if (!parsedData.success) {
     console.log("Invalid input:", parsedData.error);
@@ -169,7 +169,7 @@ app.post(
   },
 );
 
-app.get("/chats/:roomId", async (req, res) => {
+app.get("/chats/:roomId", async (req: Request, res: Response): Promise<void> => {
   const roomId = Number(req.params.roomId);
 
   if (isNaN(roomId)) {
@@ -196,7 +196,7 @@ app.get("/chats/:roomId", async (req, res) => {
   }
 });
 
-app.get("/room/:slug", async (req, res) => {
+app.get("/room/:slug", async (req: Request, res: Response): Promise<void> => {
   const slug = req.params.slug;
 
   if (!slug || slug === "undefined") {
@@ -230,10 +230,10 @@ app.get("/room/:slug", async (req, res) => {
   }
 });
 
-app.post("/clear", async (req, res) => {
+app.post("/clear", async (req: Request, res: Response): Promise<void> => {
   const roomId = req.body.roomId;
 
-  const room = await prismaClient.chat.deleteMany({
+  await prismaClient.chat.deleteMany({
     where: {
       roomId,
     },
@@ -242,7 +242,7 @@ app.post("/clear", async (req, res) => {
   res.status(200).json({ msg: "Cleared Canvas" });
 });
 
-app.post("/execute-code", async (req, res) => {
+app.post("/execute-code", async (req: Request, res: Response): Promise<void> => {
   try {
     const response = await fetch(PISTON_API_URL, {
       method: "POST",
@@ -272,6 +272,8 @@ app.post("/execute-code", async (req, res) => {
   }
 });
 
-app.listen(3002, () => {
-  console.log("Server is running on port 3002");
+const PORT = process.env.PORT || 3002;
+
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
 });
