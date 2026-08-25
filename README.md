@@ -2,7 +2,7 @@
 
 **CodeSketch** is a collaborative platform that allows users to **draw, code, and chat** in real-time. It provides a seamless experience for teams to work together on sketches, share and edit code, and communicate via text or voice chat.
 
-Live Link - https://dev-sketch-frontend.vercel.app/
+Live Link - [https://CodeSketch-frontend.vercel.app/](https://codesketch-930.vercel.app/)
 
 ---
 
@@ -28,29 +28,19 @@ Live Link - https://dev-sketch-frontend.vercel.app/
 
 ## Folder Structure
 
-<<<<<<< Updated upstream
-### `frontend/` ([View Repository](https://github.com/RISHIK92/Dev-Sketch/tree/main/frontend))
-This folder contains the **React & Next.js frontend** for Dev-Sketch.  
-=======
 ### `frontend/` ([View Repository](https://github.com/Shivam1983/CodeSketch/tree/main/frontend))
 This folder contains the **React & Next.js frontend** for CodeSketch.  
->>>>>>> Stashed changes
 - Built using **Next.js, React, TypeScript**.  
 - Implements **real-time drawing, code sharing, and chat**.  
 - Uses **WebSockets** for live updates.  
 
-<<<<<<< Updated upstream
-### `http-backend/` ([View Repository](https://github.com/RISHIK92/Dev-Sketch/tree/main/http-backend))
-This is the **HTTP API backend** of Dev-Sketch.  
-=======
 ### `http-backend/` ([View Repository](https://github.com/Shivam1983/CodeSketch/tree/main/http-backend))
 This is the **HTTP API backend** of CodeSketch.  
->>>>>>> Stashed changes
 - Built using **Node.js, Express, Prisma**.  
 - Handles **user authentication, database interactions, and API requests**.
 - Manages **user profiles, project data, and authentication**.  
 
-### `websocket-backend/` ([View Repository](https://github.com/RISHIK92/Dev-Sketch/tree/main/websocket-backend))
+### `websocket-backend/` ([View Repository](https://github.com/Shivam1983/CodeSketch/tree/main/websocket-backend))
 This is the **WebSocket backend** for real-time features.  
 - Uses **Socket.io** for live communication.  
 - Manages **real-time drawing, code collaboration, and chat events**.  
@@ -100,9 +90,9 @@ pnpm run dev
 
 ## Folder Details
 
-- [Frontend README](https://github.com/RISHIK92/Dev-Sketch/tree/main/frontend)  
-- [HTTP Backend README](https://github.com/RISHIK92/Dev-Sketch/tree/main/http-backend)  
-- [WebSocket Backend README](https://github.com/RISHIK92/Dev-Sketch/tree/main/websocket-backend)
+- [Frontend README](https://github.com/Shivam1983/CodeSketch/tree/main/frontend)  
+- [HTTP Backend README](https://github.com/Shivam1983/CodeSketch/tree/main/http-backend)  
+- [WebSocket Backend README](https://github.com/Shivam1983/CodeSketch/tree/main/websocket-backend)
   
 &nbsp;
 &nbsp;
