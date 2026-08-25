@@ -1,6 +1,6 @@
-# Dev-Sketch 
+# CodeSketch 
 
-**Dev-Sketch** is a collaborative platform that allows users to **draw, code, and chat** in real-time. It provides a seamless experience for teams to work together on sketches, share and edit code, and communicate via text or voice chat.
+**CodeSketch** is a collaborative platform that allows users to **draw, code, and chat** in real-time. It provides a seamless experience for teams to work together on sketches, share and edit code, and communicate via text or voice chat.
 
 Live Link - [https://CodeSketch-frontend.vercel.app/](https://codesketch-930.vercel.app/)
 
@@ -29,13 +29,13 @@ Live Link - [https://CodeSketch-frontend.vercel.app/](https://codesketch-930.ver
 ## Folder Structure
 
 ### `frontend/` ([View Repository](https://github.com/Shivam1983/CodeSketch/tree/main/frontend))
-This folder contains the **React & Next.js frontend** for Dev-Sketch.  
+This folder contains the **React & Next.js frontend** for CodeSketch.  
 - Built using **Next.js, React, TypeScript**.  
 - Implements **real-time drawing, code sharing, and chat**.  
 - Uses **WebSockets** for live updates.  
 
 ### `http-backend/` ([View Repository](https://github.com/Shivam1983/CodeSketch/tree/main/http-backend))
-This is the **HTTP API backend** of Dev-Sketch.  
+This is the **HTTP API backend** of CodeSketch.  
 - Built using **Node.js, Express, Prisma**.  
 - Handles **user authentication, database interactions, and API requests**.
 - Manages **user profiles, project data, and authentication**.  
@@ -47,17 +47,45 @@ This is the **WebSocket backend** for real-time features.
 - Ensures seamless **room-based collaboration**.  
 
 ---
-## 📢 Contributing
-Contributions are welcome! Feel free to submit issues or pull requests to improve Dev-Sketch.
-&nbsp;
-&nbsp;
 ## Installation & Setup
+
+### Prerequisites
+Make sure you have **Node.js** and **pnpm** installed on your system.
+If you don't have pnpm installed, you can install it globally via:
+```sh
+npm install -g pnpm
+```
 
 ### 1️⃣ Clone the Repository
 ```sh
-git clone https://github.com/RISHIK92/Dev-Sketch.git
-cd Dev-Sketch
+git clone https://github.com/Shivam1983/CodeSketch.git
+cd CodeSketch
 ```
+
+### 2️⃣ Run the HTTP Backend
+Open a new terminal window:
+```sh
+cd http-backend
+pnpm install
+pnpm run dev
+```
+
+### 3️⃣ Run the WebSocket Backend
+Open a new terminal window:
+```sh
+cd websocket-backend
+pnpm install
+pnpm run dev
+```
+
+### 4️⃣ Run the Frontend
+Open a new terminal window:
+```sh
+cd frontend
+pnpm install
+pnpm run dev
+```
+
 🔎 Visit each folder's README for a more detailed view of what each folder does:
 
 ## Folder Details
