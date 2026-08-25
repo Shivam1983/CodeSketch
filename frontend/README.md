@@ -1,6 +1,6 @@
-# Dev-Sketch Frontend 🎨
+# CodeSketch Frontend 🎨
 
-Welcome to **Dev-Sketch**, a collaborative platform where users can **draw, code, and chat** in real-time. This is the **frontend** part of the project, built using **React & Next.js**.
+Welcome to **CodeSketch**, a collaborative platform where users can **draw, code, and chat** in real-time. This is the **frontend** part of the project, built using **React & Next.js**.
 
 ## 🚀 Features
 - 🎨 **Real-time Canvas** - Draw and collaborate with others.
@@ -69,15 +69,15 @@ Configuration for **TypeScript**.
 
 ### 1️⃣ Clone the Repository
 ```sh
-git clone https://github.com/RISHIK92/Dev-Sketch.git
-cd Dev-Sketch/frontend
+git clone https://github.com/Shivam1983/CodeSketch.git
+cd CodeSketch/frontend
 ```
 
 ### 2️⃣ Install Dependencies
 ```sh
-npm install
+pnpm install
 ```
 ### 3️⃣ Start the server
 ```sh
-npm run dev
+pnpm run dev
 ```
